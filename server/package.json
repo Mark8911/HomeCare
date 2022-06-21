@@ -28,6 +28,7 @@
     "sequelize-auto": "^0.8.2"
   },
   "devDependencies": {
-    "eslint": "^7.25.0"
+    "eslint": "^7.25.0",
+    "nodemon": "^2.0.16"
   }
 }

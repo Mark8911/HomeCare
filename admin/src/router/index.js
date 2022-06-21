@@ -95,6 +95,62 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/addPerson',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'addPerson',
+      name: 'AddPerson',
+      component: () => import('@/views/account/addAccount/'),
+      meta: {
+        title: '新增服务对象',
+        icon: 'dashboard'
+      }
+    }]
+  },
+  {
+    path: '/personList',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'personList',
+      name: 'Personlist',
+      component: () => import('@/views/account/addAccount/'),
+      meta: {
+        title: '服务对象列表',
+        icon: 'dashboard'
+      }
+    }]
+  },
+  {
+    path: '/addService',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'addService',
+      name: 'AddService',
+      component: () => import('@/views/account/addAccount/'),
+      meta: {
+        title: '新增服务记录',
+        icon: 'dashboard'
+      }
+    }]
+  },
+  {
+    path: '/serviceList',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'serviceList',
+      name: 'ServiceList',
+      component: () => import('@/views/account/addAccount/'),
+      meta: {
+        title: '服务记录列表',
+        icon: 'dashboard'
+      }
+    }]
+  },
+  {
     path: '/account',
     component: Layout,
     redirect: '/account/list',
