@@ -43,28 +43,29 @@ module.exports = function () {
             }
             permissionApi.push(tmp)
           }
-          const res = permissionApi.filter(item => {
-            const index = item.path.indexOf(':')
-            if (index !== -1) {
-              // console.log(index)
-              // 根据 :id等 动态拼接api路径
-              item.path = item.path.substring(0, index) + `${ctx.url.substring(index)}`
-              // console.log('index: '+index+' '+item.path)
-            }
-            // 过滤出当前访问的api接口
-            return new RegExp(item.path, 'g').test(ctx.url) && item.method.toUpperCase() === ctx.request.method.toUpperCase()
-          })
-          // 返回当前访问的api接口列表
-          // console.log(res)
-          if (res.length === 0) {
-            ctx.status = 401
-            ctx.body = {
-              code: 401,
-              msg: '您的账户没有该访问权限！'
-            }
-          } else {
-            await next()
-          }
+          // const res = permissionApi.filter(item => {
+          //   const index = item.path.indexOf(':')
+          //   if (index !== -1) {
+          //     // console.log(index)
+          //     // 根据 :id等 动态拼接api路径
+          //     item.path = item.path.substring(0, index) + `${ctx.url.substring(index)}`
+          //     // console.log('index: '+index+' '+item.path)
+          //   }
+          //   // 过滤出当前访问的api接口
+          //   return new RegExp(item.path, 'g').test(ctx.url) && item.method.toUpperCase() === ctx.request.method.toUpperCase()
+          // })
+          // // 返回当前访问的api接口列表
+          // // console.log(res)
+          // if (res.length === 0) {
+          //   ctx.status = 401
+          //   ctx.body = {
+          //     code: 401,
+          //     msg: '您的账户没有该访问权限！'
+          //   }
+          // } else {
+          //   await next()
+          // }
+          await next()
         } catch (err) {
           // 捕获 jwt 的异常信息
           if (err.message === 'jwt expired') {

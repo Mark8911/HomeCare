@@ -13,7 +13,7 @@ module.exports = {
       username,
       password
     } = ctx.request.body
-    // console.log(ctx.request.body)
+    console.log(ctx.request.body)
     if (!username || !password) {
       ctx.body = {
         status: 'error',

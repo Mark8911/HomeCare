@@ -2,9 +2,6 @@ const {
   Account,
   Role
 } = require('../models/index') // 引入account表
-const {
-  sequelize
-} = require('../config/connect')
 
 class AccountService {
   // 根据id查询
