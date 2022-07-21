@@ -1,48 +1,43 @@
 const { sequelize, DataTypes } = require("../config/connect") // 引入相关依赖以及数据库
-const HomeCare = sequelize.define(
-    "aw_homecare",
+const ContactUser = sequelize.define(
+    "aw_contactuser", // 数据库中生成的表名(最终会自动在末尾添加s,因此最终数据库中生自动成表名为accounts
     { // 表字段信息配置
-      id: {
+      con_id: {
         type: DataTypes.INTEGER(11), // 字段类型
         allowNull: false, // 是否允许为空
         autoIncrement: true,
         primaryKey: true, // 是否主键
       },
-      time: {
-        type: DataTypes.DATE, // 字段类型
-        allowNull: false, // 是否允许为空
-        comment: '服务时间'
-      },
-      item: {
+      conName: {
         type: DataTypes.STRING, // 字段类型
         allowNull: false, // 是否允许为空
-        comment: '服务项目'
+        comment: '姓名'
       },
-      score: {
-        type: DataTypes.INTEGER, // 字段类型
-        allowNull: true, // 是否允许为空
-        comment: '服务评分'
-      },
-      evaluate: {
+      conAge: {
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        comment: '服务反馈'
+        comment: '年龄'
       },
-      person: {
+      conSex: {
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        comment: '服务人员'
+        comment: '性别'
       },
-      introduction:{
+      relation: {
+        type: DataTypes.STRING, // 字段类型
+        allowNull: false, // 是否允许为空
+        comment: '联系人关系'
+      },
+      conPhone: {
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        comment: '备注'
+        comment: '联系人电话'
       },
-      imgUrl:{
+      conJob: {
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        defaultValue:'照片'
-      }
+        comment: '联系人职业'
+      },
     },
     {
       freezeTableName: false,
@@ -50,8 +45,6 @@ const HomeCare = sequelize.define(
     }
 )
 
-// Service.sync({force:true}).catch((err) => {
-//   console.log(err)
-// }) // 是否自动创建表
+// UserInfo.sync({force:true}) // 是否自动创建表
 
-module.exports = HomeCare
+module.exports = ContactUser

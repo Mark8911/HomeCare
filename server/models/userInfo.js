@@ -13,6 +13,21 @@ const UserInfo = sequelize.define(
         allowNull: false, // 是否允许为空
         comment: '姓名'
       },
+      age: {
+        type: DataTypes.STRING, // 字段类型
+        allowNull: true, // 是否允许为空
+        comment: '年龄'
+      },
+      sex: {
+        type: DataTypes.STRING, // 字段类型
+        allowNull: true, // 是否允许为空
+        comment: '性别'
+      },
+      birth: {
+        type: DataTypes.DATE, // 字段类型
+        allowNull: true, // 是否允许为空
+        comment: '出生日期'
+      },
       idCard: {
         type: DataTypes.STRING, // 字段类型
         allowNull: false, // 是否允许为空
@@ -23,15 +38,10 @@ const UserInfo = sequelize.define(
         allowNull: true, // 是否允许为空
         comment: '家庭住址'
       },
-      sex: {
+      marital: {
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        comment: '性别'
-      },
-      birth: {
-        type: DataTypes.DATE, // 字段类型
-        allowNull: true, // 是否允许为空
-        comment: '生日'
+        comment: '婚姻状况'
       },
       type: {
         type: DataTypes.STRING, // 字段类型
@@ -41,10 +51,16 @@ const UserInfo = sequelize.define(
       introduction:{
         type: DataTypes.STRING, // 字段类型
         allowNull: true, // 是否允许为空
-        defaultValue:'个人介绍'
+        defaultValue:'备注'
+      },
+      imgUrl:{
+        type: DataTypes.STRING, // 字段类型
+        allowNull: true, // 是否允许为空
+        defaultValue:'照片'
       }
     },
     {
+      freezeTableName: false,
       timestamps: true, // 是否自动在数据表中添加数据操作时间
     }
 )

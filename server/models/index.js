@@ -18,10 +18,16 @@ const RolePermission=require('./rolePermission')
 const MenuPermission=require('./menuPermission')
 const UserInfo = require('./userInfo')
 const HomeCare = require('./HomeCare')
+const ContactUser = require('./ContactUser')
 
 // 用户和服务一对多
-UserInfo.hasMany(HomeCare, { foreignKey: 'person_id' })
-HomeCare.belongsTo(UserInfo)
+UserInfo.hasMany(HomeCare, { foreignKey: 'person_id'})
+HomeCare.belongsTo(UserInfo, { foreignKey: 'person_id'})
+// 用户和联系人一对多
+UserInfo.hasMany(ContactUser, { foreignKey: 'person_id'})
+ContactUser.belongsTo(UserInfo, { foreignKey: 'person_id'})
+
+
 // const RecruitType=require('./recruitType')
 // 新闻关联
 // 一（News）对一（RecommendNews）
@@ -51,7 +57,7 @@ Permission.belongsToMany(Role, { through: RolePermission })
 // 一对多
 // MenuList.hasMany(Permission, { foreignKey: 'menu_id' })
 // Permission.belongsTo(MenuList, { foreignKey: 'menu_id' })
-// sequelize.sync({ alter: true }).then(r => console.log('所有模型均已成功同步.'))
+sequelize.sync({ alter: true }).then(r => console.log('所有模型均已成功同步.'))
 
 module.exports = {
   Op,
@@ -70,6 +76,7 @@ module.exports = {
   RolePermission,
   MenuPermission,
   UserInfo,
-  HomeCare
+  HomeCare,
+  ContactUser
 }
 

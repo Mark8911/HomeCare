@@ -1,5 +1,6 @@
 const {
-  HomeCare
+  HomeCare,
+  UserInfo
 } = require('../models/index')
 
 class HomeCareService {
@@ -21,6 +22,10 @@ class HomeCareService {
   async getServiceList(params) {
     return HomeCare.findAndCountAll({
       limit: parseInt(params.pagesize),
+      include: [{
+        model: UserInfo,
+        attributes: ['name', 'sex', 'address']
+      }],
       // 跳过实例数目
       offset: (params.pagenum - 1) * parseInt(params.pagesize)
     })

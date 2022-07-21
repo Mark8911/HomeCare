@@ -9,6 +9,7 @@
  const routers = router
    .post('/addUser', userInfo.addUserInfo)
    .get('/getUserList', userInfo.getUserList)
+   .get('/getUserDetail', userInfo.getUserDetail)
 
  module.exports = routers
  

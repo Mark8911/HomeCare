@@ -36,7 +36,6 @@ module.exports = {
       count,
       rows
     } = await UserInfoService.getUserInfoList(params)
-    console.log(count, rows, '55555')
     if (count > 0) {
       const job_post_list = []
       for (let i = 0; i < rows.length; i++) {
@@ -57,6 +56,25 @@ module.exports = {
         status: 'error',
         msg: '查询列表失败',
         data: null
+      }
+    }
+  },
+
+  // 获取用户详情
+  getUserDetail: async (ctx) => {
+    const params = ctx.request.query
+    console.log(params, 'ddd')
+    const result = await UserInfoService.getUserInfoById(params.id)
+    if (result) {
+      ctx.body = {
+        status: 200,
+        data: result,
+        msg: ''
+      }
+    } else {
+      ctx.body = {
+        status: 'error',
+        msg: '查询失败'
       }
     }
   }

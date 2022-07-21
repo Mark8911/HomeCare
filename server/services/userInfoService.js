@@ -1,5 +1,6 @@
 const {
-  UserInfo
+  UserInfo,
+  ContactUser
 } = require('../models/index')
 
 class UserInfoService {
@@ -9,6 +10,9 @@ class UserInfoService {
       where: {
         person_id: id
       },
+      include: [{
+        model: ContactUser,
+      }],
     })
   }
   
@@ -23,14 +27,22 @@ class UserInfoService {
   
   // 新增账户
   async createUser(userInfo) {
-    console.log(userInfo)
-    return UserInfo.create(userInfo)
+    let res = await UserInfo.create(userInfo)
+    let list = userInfo.contactList
+    list.forEach(async element => {
+      element.person_id = res.dataValues.person_id
+      console.log(element, 'element')
+      await ContactUser.create(element)
+    });
+    return res
   }
   
   async getUserInfoList(params) {
-    console.log(JSON.stringify(params), 'params1111')
     return UserInfo.findAndCountAll({
       limit: parseInt(params.pagesize),
+      include: [{
+        model: ContactUser
+      }],
       // 跳过实例数目
       offset: (params.pagenum - 1) * parseInt(params.pagesize)
     })
