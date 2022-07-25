@@ -10,6 +10,9 @@ class HomeCareService {
       where: {
         id: id
       },
+      include: [{
+        model: UserInfo
+      }]
     })
   }
   

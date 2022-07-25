@@ -22,7 +22,7 @@ module.exports = {
     }
   },
 
-  // 获取用户列表
+  // 获取服务列表
   getServiceList: async (ctx) => {
     const params = ctx.request.query
     const {
@@ -49,6 +49,25 @@ module.exports = {
         status: 'error',
         msg: '查询列表失败',
         data: null
+      }
+    }
+  },
+
+  // 获取服务详情
+  getServiceDetail: async (ctx) => {
+    const params = ctx.request.query
+    console.log(params, 'ddd')
+    const result = await HomeCareService.getServiceById(params.id)
+    if (result) {
+      ctx.body = {
+        status: 200,
+        data: result,
+        msg: ''
+      }
+    } else {
+      ctx.body = {
+        status: 'error',
+        msg: '查询失败'
       }
     }
   }

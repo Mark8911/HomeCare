@@ -9,6 +9,7 @@
  const routers = router
    .post('/addService', service.addService)
    .get('/getServiceList', service.getServiceList)
+   .get('/getServiceDetail', service.getServiceDetail)
 
  module.exports = routers
  
