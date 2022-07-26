@@ -10,6 +10,7 @@
    .post('/addUser', userInfo.addUserInfo)
    .get('/getUserList', userInfo.getUserList)
    .get('/getUserDetail', userInfo.getUserDetail)
+   .post('/updateUserInfo', userInfo.updateUserInfo)
 
  module.exports = routers
  

@@ -14,6 +14,7 @@
     "test:ci": "npm run lint && npm run test:unit"
   },
   "dependencies": {
+    "ali-oss": "^6.17.1",
     "axios": "0.18.1",
     "core-js": "3.6.5",
     "echarts": "^5.1.2",
@@ -26,6 +27,7 @@
     "path-to-regexp": "2.4.0",
     "screenfull": "4.2.0",
     "vue": "2.6.10",
+    "vue-core-image-upload": "^2.4.13",
     "vue-i18n": "7.3.2",
     "vue-router": "3.0.6",
     "vuex": "3.1.0",

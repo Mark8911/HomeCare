@@ -31,8 +31,9 @@ class UserInfoService {
     let list = userInfo.contactList
     list.forEach(async element => {
       element.person_id = res.dataValues.person_id
-      console.log(element, 'element')
-      await ContactUser.create(element)
+      if(element.name){
+        await ContactUser.create(element)
+      }
     });
     return res
   }
@@ -50,6 +51,14 @@ class UserInfoService {
   
   // 更新账户
   async updateUserInfo(userId, data) {
+    let list = data.contactList
+    list.forEach(async element => {
+      ContactUser.update(element, {
+        where: {
+          con_id: element.con_id
+        }
+      })
+    });
     return UserInfo.update(data, {
       where: {
         person_id: userId

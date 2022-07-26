@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /**
  * 注：子菜单仅在route children.length>=1时出现
@@ -31,63 +31,65 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/redirect',
+    path: "/redirect",
     component: Layout,
     hidden: true,
     children: [
       {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
+        path: "/redirect/:path(.*)",
+        component: () => import("@/views/redirect/index"),
+      },
+    ],
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: "/login",
+    component: () => import("@/views/login/index"),
+    hidden: true,
   },
   {
-    path: '/register',
-    component: () => import('@/views/register/index'),
-    hidden: true
+    path: "/register",
+    component: () => import("@/views/register/index"),
+    hidden: true,
   },
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'index',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: '首页',
-        icon: 'dashboard',
-        affix: true
-      }
-    }]
+    redirect: "/index",
+    children: [
+      {
+        path: "index",
+        name: "Dashboard",
+        component: () => import("@/views/dashboard/index"),
+        meta: {
+          title: "首页",
+          icon: "dashboard",
+          affix: true,
+        },
+      },
+    ],
   },
 
   {
-    path: '/personal',
+    path: "/personal",
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Personal',
-        component: () => import('@/views/personal/index'),
+        path: "index",
+        name: "Personal",
+        component: () => import("@/views/personal/index"),
         meta: {
-          title: '个人中心',
-          icon: 'user'
-        }
-      }
-    ]
+          title: "个人中心",
+          icon: "user",
+        },
+      },
+    ],
   },
   {
-    path: '*',
-    component: () => import('@/views/404'),
-    hidden: true
-  }
-]
+    path: "*",
+    component: () => import("@/views/404"),
+    hidden: true,
+  },
+];
 
 /**
  * asyncRoutes
@@ -95,285 +97,326 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/addPerson',
+    path: "/addPerson",
     component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'addPerson',
-      name: 'AddPerson',
-      component: () => import('@/views/account/addAccount/'),
-      meta: {
-        title: '新增服务对象',
-        icon: 'dashboard'
-      }
-    }]
+    redirect: "/index",
+    children: [
+      {
+        path: "addPerson",
+        name: "AddPerson",
+        component: () => import("@/views/account/addAccount/"),
+        meta: {
+          title: "新增服务对象",
+          icon: "dashboard",
+        },
+      },
+    ],
   },
   {
-    path: '/personList',
+    path: "/UserList",
     component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'personList',
-      name: 'Personlist',
-      component: () => import('@/views/account/addAccount/'),
-      meta: {
-        title: '服务对象列表',
-        icon: 'dashboard'
-      }
-    }]
+    redirect: "/index",
+    children: [
+      {
+        path: "userList",
+        name: "UserList",
+        component: () => import("@/views/account/userList/"),
+        meta: {
+          title: "服务对象列表",
+          icon: "dashboard",
+        },
+      },
+    ],
   },
   {
-    path: '/addService',
+    path: "/AccountDetail",
     component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'addService',
-      name: 'AddService',
-      component: () => import('@/views/account/addAccount/'),
-      meta: {
-        title: '新增服务记录',
-        icon: 'dashboard'
-      }
-    }]
+    redirect: "/index",
+    children: [
+      {
+        path: "accountDetail",
+        name: "AccountDetail",
+        component: () => import("@/views/account/accountDetail/"),
+        meta: {
+          title: "服务对象详情",
+          icon: "dashboard",
+        },
+      },
+    ],
   },
   {
-    path: '/serviceList',
+    path: "/addService",
     component: Layout,
-    redirect: '/index',
-    children: [{
-      path: 'serviceList',
-      name: 'ServiceList',
-      component: () => import('@/views/account/addAccount/'),
-      meta: {
-        title: '服务记录列表',
-        icon: 'dashboard'
-      }
-    }]
+    redirect: "/index",
+    children: [
+      {
+        path: "addService",
+        name: "AddService",
+        component: () => import("@/views/service/addService/"),
+        meta: {
+          title: "新增服务记录",
+          icon: "dashboard",
+        },
+      },
+    ],
   },
   {
-    path: '/account',
+    path: "/serviceDetail",
     component: Layout,
-    redirect: '/account/list',
-    name: 'Account',
+    redirect: "/index",
+    children: [
+      {
+        path: "serviceDetail",
+        name: "ServiceDetail",
+        component: () => import("@/views/service/serviceDetail/"),
+        meta: {
+          title: "服务详情",
+          icon: "dashboard",
+        },
+      },
+    ],
+  },
+  {
+    path: "/serviceList",
+    component: Layout,
+    redirect: "/index",
+    children: [
+      {
+        path: "serviceList",
+        name: "ServiceList",
+        component: () => import("@/views/service/serviceList/"),
+        meta: {
+          title: "服务记录列表",
+          icon: "dashboard",
+        },
+      },
+    ],
+  },
+  {
+    path: "/account",
+    component: Layout,
+    redirect: "/account/list",
+    name: "Account",
     meta: {
-      title: '账户管理',
-      icon: 'user',
-      roles: []
+      title: "账户管理",
+      icon: "user",
+      roles: [],
     },
     children: [
       {
-        path: 'add_account',
-        name: 'AddAccount',
-        component: () => import('@/views/account/addAccount/'),
-        meta: { title: '添加账户' }
+        path: "add_account",
+        name: "AddAccount",
+        component: () => import("@/views/account/addAccount/"),
+        meta: { title: "添加账户" },
       },
       {
-        path: 'manage_account',
-        name: 'ManageAccount',
-        component: () => import('@/views/account/manageAccount/'),
-        meta: { title: '账户列表' }
-      }
-    ]
+        path: "manage_account",
+        name: "ManageAccount",
+        component: () => import("@/views/account/manageAccount/"),
+        meta: { title: "账户列表" },
+      },
+    ],
   },
   {
-    path: '/permission',
+    path: "/permission",
     component: Layout,
-    redirect: '/permission/list',
-    name: 'Permission',
+    redirect: "/permission/list",
+    name: "Permission",
     alwaysShow: true,
     meta: {
-      title: '权限管理',
-      icon: 'nested',
-      roles: []
+      title: "权限管理",
+      icon: "nested",
+      roles: [],
     },
     children: [
       {
-        path: 'role_manage',
-        name: 'RoleManage',
-        component: () => import('@/views/permission/roleManage/'), // Parent router-view
-        meta: { title: '角色管理' }
+        path: "role_manage",
+        name: "RoleManage",
+        component: () => import("@/views/permission/roleManage/"), // Parent router-view
+        meta: { title: "角色管理" },
       },
       {
-        path: 'role_permission',
-        name: 'RolePermission',
-        component: () => import('@/views/permission/rolePermission/'), // Parent router-view
-        meta: { title: '角色权限' }
+        path: "role_permission",
+        name: "RolePermission",
+        component: () => import("@/views/permission/rolePermission/"), // Parent router-view
+        meta: { title: "角色权限" },
       },
       {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/permission/list/index'),
-        meta: { title: '权限列表' }
-      }
-    ]
+        path: "list",
+        name: "List",
+        component: () => import("@/views/permission/list/index"),
+        meta: { title: "权限列表" },
+      },
+    ],
   },
   {
-    path: '/article',
+    path: "/article",
     component: Layout,
-    redirect: '/article/list',
-    name: 'Article',
+    redirect: "/article/list",
+    name: "Article",
     meta: {
-      title: '文章管理',
-      icon: 'el-icon-s-help',
-      roles: []
+      title: "文章管理",
+      icon: "el-icon-s-help",
+      roles: [],
     },
     children: [
       {
-        path: 'create',
-        component: () => import('@/views/article/create'),
-        name: 'CreateArticle',
+        path: "create",
+        component: () => import("@/views/article/create"),
+        name: "CreateArticle",
         meta: {
-          title: '创建文章',
-          icon: 'edit'
-        }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/article/edit'),
-        name: 'EditArticle',
-        meta: {
-          title: '编辑文章',
-          noCache: true,
-          activeMenu: '/article/list'
+          title: "创建文章",
+          icon: "edit",
         },
-        hidden: true
       },
       {
-        path: 'list',
-        component: () => import('@/views/article/list'),
-        name: 'ArticleList',
+        path: "edit/:id(\\d+)",
+        component: () => import("@/views/article/edit"),
+        name: "EditArticle",
         meta: {
-          title: '文章列表',
-          icon: 'list'
-        }
-      }
-    ]
+          title: "编辑文章",
+          noCache: true,
+          activeMenu: "/article/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "list",
+        component: () => import("@/views/article/list"),
+        name: "ArticleList",
+        meta: {
+          title: "文章列表",
+          icon: "list",
+        },
+      },
+    ],
   },
   {
-    path: '/job',
+    path: "/job",
     component: Layout,
-    redirect: '/job/list',
-    name: 'Job',
+    redirect: "/job/list",
+    name: "Job",
     meta: {
-      title: '职位管理',
-      icon: 'job',
-      roles: []
+      title: "职位管理",
+      icon: "job",
+      roles: [],
     },
     children: [
       {
-        path: 'create',
-        component: () => import('@/views/jobs/create'),
-        name: 'CreateJob',
+        path: "create",
+        component: () => import("@/views/jobs/create"),
+        name: "CreateJob",
         meta: {
-          title: '创建职位',
-          icon: 'edit'
-        }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/jobs/edit'),
-        name: 'EditJob',
-        meta: {
-          title: '编辑职位',
-          noCache: true,
-          activeMenu: '/job/list'
+          title: "创建职位",
+          icon: "edit",
         },
-        hidden: true
       },
       {
-        path: 'list',
-        component: () => import('@/views/jobs/list'),
-        name: 'JobList',
+        path: "edit/:id(\\d+)",
+        component: () => import("@/views/jobs/edit"),
+        name: "EditJob",
         meta: {
-          title: '职位列表',
-          icon: 'list'
-        }
-      }
-    ]
+          title: "编辑职位",
+          noCache: true,
+          activeMenu: "/job/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "list",
+        component: () => import("@/views/jobs/list"),
+        name: "JobList",
+        meta: {
+          title: "职位列表",
+          icon: "list",
+        },
+      },
+    ],
   },
   {
-    path: '/product',
+    path: "/product",
     component: Layout,
-    redirect: '/product/list',
-    name: 'Product',
+    redirect: "/product/list",
+    name: "Product",
     meta: {
-      title: '产品管理',
-      icon: 'product',
-      roles: []
+      title: "产品管理",
+      icon: "product",
+      roles: [],
     },
     children: [
       {
-        path: 'create',
-        component: () => import('@/views/products/create'),
-        name: 'CreateProduct',
+        path: "create",
+        component: () => import("@/views/products/create"),
+        name: "CreateProduct",
         meta: {
-          title: '添加产品',
-          icon: 'edit'
-        }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/products/edit'),
-        name: 'EditProduct',
-        meta: {
-          title: '编辑产品',
-          noCache: true,
-          activeMenu: '/product/list'
+          title: "添加产品",
+          icon: "edit",
         },
-        hidden: true
       },
       {
-        path: 'list',
-        component: () => import('@/views/products/list'),
-        name: 'ProductList',
+        path: "edit/:id(\\d+)",
+        component: () => import("@/views/products/edit"),
+        name: "EditProduct",
         meta: {
-          title: '产品列表',
-          icon: 'list'
-        }
-      }
-    ]
+          title: "编辑产品",
+          noCache: true,
+          activeMenu: "/product/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "list",
+        component: () => import("@/views/products/list"),
+        name: "ProductList",
+        meta: {
+          title: "产品列表",
+          icon: "list",
+        },
+      },
+    ],
   },
   {
-    path: 'external-link',
+    path: "external-link",
     component: Layout,
     children: [
       {
-        path: 'http://localhost:8080/',
+        path: "http://localhost:8080/",
         meta: {
-          title: 'Xanadu',
-          icon: 'link'
-        }
-      }
-    ]
-  }
+          title: "Xanadu",
+          icon: "link",
+        },
+      },
+    ],
+  },
   // // 404 page must be placed at the end !!!
   // {
   //   path: '*',
   //   redirect: '/404',
   //   hidden: true
   // }
-]
+];
 
-const createRouter = () => new Router({
-  // mode: 'history', // 需要服务端支持
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // 需要服务端支持
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes,
+  });
 
-const router = createRouter()
+const router = createRouter();
 
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 router.beforeEach((to, from, next) => {
   /* eslint-disable */
   if (_hmt) {
     if (to.path) {
-      _hmt.push(['_trackPageview',to.fullPath]);
+      _hmt.push(["_trackPageview", to.fullPath]);
     }
   }
   next();
   /* eslint-enable */
-})
-export default router
+});
+export default router;

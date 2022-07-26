@@ -8,42 +8,67 @@
       label-position="right"
     >
       <el-form-item label="姓名" prop="name">
-        <el-input class="input-item" v-model="accountForm.name" />
-      </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input class="input-item" v-model="accountForm.age" />
-      </el-form-item>
-      <el-form-item label="性别" prop="sex">
         <el-select
           class="input-item"
-          v-model="accountForm.sex"
+          v-model="accountForm.name"
           placeholder="请选择"
+          @change="selectChange"
         >
-          <el-option label="男" value="1"> </el-option>
-          <el-option label="女" value="0"> </el-option>
+          <el-option
+            v-for="(item, index) in roles"
+            :key="index"
+            :label="item.name"
+            :value="item.person_id"
+          >
+          </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="出生日期" prop="birth">
+      <el-form-item label="服务日期" prop="time">
         <el-date-picker
           class="input-item"
-          v-model="accountForm.birth"
+          v-model="accountForm.time"
           type="date"
           value-format="yyyy-MM-dd"
           placeholder="选择日期时间"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="证件号" prop="idCard">
-        <el-input class="input-item" v-model="accountForm.idCard" />
+      <el-form-item label="服务项目" prop="item">
+        <el-select
+          class="input-item"
+          v-model="accountForm.item"
+          placeholder="请选择"
+          multiple
+        >
+          <el-option
+            v-for="(item, index) in serverseList"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="家庭住址" prop="address">
-        <el-input class="input-item" v-model="accountForm.address" />
+      <el-form-item label="评分" prop="score">
+        <el-input class="input-item" v-model="accountForm.score" />
       </el-form-item>
-      <el-form-item label="婚姻状况" prop="marital">
-        <el-input class="input-item" v-model="accountForm.marital" />
+      <el-form-item label="评价" prop="evaluate">
+        <el-select
+          class="input-item"
+          v-model="accountForm.evaluate"
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="(item, index) in evaluateList"
+            :key="index"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="残疾类型" prop="type">
-        <el-input class="input-item" v-model="accountForm.type" />
+      <el-form-item label="服务人员" prop="person">
+        <el-input class="input-item" v-model="accountForm.person" />
       </el-form-item>
       <el-form-item label="备注" prop="introduction">
         <el-input
@@ -53,83 +78,43 @@
           :autosize="{ minRows: 2, maxRows: 8 }"
         />
       </el-form-item>
-      <el-form-item label="照片" prop="avatar">
-        <el-upload
+      <el-form-item label="照片" prop="imgUrl">
+        <div
+          v-for="(item, index) in imgList"
+          :key="index"
           class="avatar-uploader"
-          action=""
-          v-model="accountForm.imgUrl"
-          :http-request="uploadURL"
-          :multiple="true"
-          :before-upload="handleBeforeUpload"
-          :limit="8"
         >
-          <img
-            v-if="accountForm.imgUrl"
-            :src="accountForm.imgUrl"
-            class="avatar"
-          />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img :src="item" class="img" />
+          <i class="el-icon-delete delete-icon" @click="deleteImg"></i>
+        </div>
+        <el-upload
+          action=""
+          v-model="imgList"
+          :http-request="uploadURL"
+          :before-upload="handleBeforeUpload"
+          :show-file-list="false"
+          :limit="9"
+        >
+          <el-button
+            v-if="imgList.length <= 9"
+            type="primary"
+            class="upload-btn"
+          >
+            点击上传
+          </el-button>
         </el-upload>
       </el-form-item>
-      <div class="contact-box">
-        <div
-          v-for="(item, index) in accountForm.contactList"
-          :key="index"
-          class="contact-item"
-        >
-          <h2>联系人{{ index + 1 }}</h2>
-          <el-form-item label="姓名">
-            <el-input class="input-item" v-model="item.conName" type="input" />
-          </el-form-item>
-          <el-form-item label="年龄">
-            <el-input class="input-item" v-model="item.conAge" type="input" />
-          </el-form-item>
-          <el-form-item label="性别">
-            <el-select
-              class="input-item"
-              v-model="item.conSex"
-              placeholder="请选择"
-            >
-              <el-option label="男" value="1"> </el-option>
-              <el-option label="女" value="0"> </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="与服务对象关系">
-            <el-input class="input-item" v-model="item.relation" type="input" />
-          </el-form-item>
-          <el-form-item label="联系方式">
-            <el-input class="input-item" v-model="item.conPhone" type="input" />
-          </el-form-item>
-          <el-form-item label="职业">
-            <el-input class="input-item" v-model="item.conJob" type="input" />
-          </el-form-item>
-        </div>
-      </div>
       <el-form-item>
         <el-popconfirm
-          v-if="!edit"
           confirm-button-text="确定"
           cancel-button-text="不用了"
           icon="el-icon-info"
           icon-color="red"
           title="确认添加该用户吗？"
-          @onConfirm="addAccount"
+          @onConfirm="addService"
         >
           <el-button slot="reference" type="primary" round plain>
             添加用户
-          </el-button>
-        </el-popconfirm>
-        <el-popconfirm
-          v-else
-          confirm-button-text="确定"
-          cancel-button-text="不用了"
-          icon="el-icon-info"
-          icon-color="red"
-          title="确认保存更改吗？"
-          @onConfirm="_updateUserInfo"
-        >
-          <el-button slot="reference" type="primary" round plain>
-            编辑用户
           </el-button>
         </el-popconfirm>
       </el-form-item>
@@ -137,8 +122,7 @@
   </el-card>
 </template>
 <script>
-import { getRolesList } from "@/api/role";
-import { addAccount, getUserDetail, updateUserInfo } from "@/api/user";
+import { addService, getUserList } from "@/api/user";
 import { uploadFile } from "@/api/file";
 import VueCoreImageUpload from "vue-core-image-upload";
 import { client, getFileNameUUID } from "@/utils/alioss";
@@ -148,47 +132,110 @@ export default {
   data() {
     return {
       src: "./static/img/img.jpg",
-      fileList: [],
-      fileList: [],
-      Addfrom: {
-        url: "",
-      },
       accountForm: {
         name: "",
-        idCard: "",
-        address: "",
-        sex: "",
-        birth: "",
-        type: "",
+        time: "",
+        item: [],
+        score: "",
+        evaluate: "",
+        person: "",
         introduction: "",
         imgUrl: "",
-        contactList: [
-          {
-            conName: "",
-            conAge: "",
-            conSex: "",
-            relation: "",
-            conPhone: "",
-            conJob: "",
-          },
-          {
-            conName: "",
-            conAge: "",
-            conSex: "",
-            relation: "",
-            conPhone: "",
-            conJob: "",
-          },
-          {
-            conName: "",
-            conAge: "",
-            conSex: "",
-            relation: "",
-            conPhone: "",
-            conJob: "",
-          },
-        ],
+        person_id: "",
       },
+      imgList: [],
+      serverseList: [
+        {
+          value: "0",
+          label: "家庭保洁",
+        },
+        {
+          value: "1",
+          label: "洗衣服务",
+        },
+        {
+          value: "2",
+          label: "助浴服务",
+        },
+        {
+          value: "3",
+          label: "助行服务",
+        },
+        {
+          value: "4",
+          label: "代办服务",
+        },
+        {
+          value: "5",
+          label: "理发服务",
+        },
+        {
+          value: "6",
+          label: "临时康护服务",
+        },
+        {
+          value: "7",
+          label: "家电维护",
+        },
+        {
+          value: "8",
+          label: "厨房维护",
+        },
+        {
+          value: "9",
+          label: "生活护理",
+        },
+        {
+          value: "10",
+          label: "修指甲",
+        },
+        {
+          value: "11",
+          label: "康复保健",
+        },
+        {
+          value: "12",
+          label: "助医服务",
+        },
+        {
+          value: "13",
+          label: "代购代买",
+        },
+        {
+          value: "14",
+          label: "上门助餐",
+        },
+        {
+          value: "15",
+          label: "生日庆祝",
+        },
+        {
+          value: "16",
+          label: "赠送礼品",
+        },
+      ],
+      evaluateList: [
+        {
+          value: "0",
+          label: "非常满意",
+        },
+        {
+          value: "1",
+          label: "满意",
+        },
+        {
+          value: "2",
+          label: "一般",
+        },
+        {
+          value: "3",
+          label: "不满意",
+        },
+        {
+          value: "4",
+          label: "非常不满意",
+        },
+      ],
       accountFormRules: {
         name: [
           {
@@ -197,52 +244,38 @@ export default {
             trigger: "blur",
           },
         ],
-        age: [
+        time: [
           {
             required: true,
-            message: "请输入年龄",
+            message: "请选择服务日期",
             trigger: "blur",
           },
         ],
-        sex: [
+        item: [
           {
             required: true,
-            message: "请输入性别",
+            message: "请选择服务项目",
             trigger: "blur",
           },
         ],
-        birth: [
+        score: [
           {
             required: true,
-            message: "请输入出生日期",
+            message: "请输入评分",
             trigger: "blur",
           },
         ],
-        idCard: [
+        evaluate: [
           {
             required: true,
-            message: "请输入证件号",
+            message: "请选择评价",
             trigger: "blur",
           },
         ],
-        address: [
+        person: [
           {
             required: true,
-            message: "请输入家庭住址",
-            trigger: "blur",
-          },
-        ],
-        marital: [
-          {
-            required: true,
-            message: "请输入婚姻状况",
-            trigger: "blur",
-          },
-        ],
-        type: [
-          {
-            required: true,
-            message: "请输入残疾类型",
+            message: "请输入服务人员",
             trigger: "blur",
           },
         ],
@@ -255,26 +288,13 @@ export default {
       fileList: [],
       // 是否禁用上传
       uploadDisabled: false,
-      // 封面图片弹窗
-      dialogImageUrl: "",
-      dialogVisible: false,
-      edit: false,
     };
   },
   // 每次进入路有前，重新获取数据
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      vm.getRolesList();
-      if (this.$route.query.id) {
-        this._getUserDetail();
-      }
+      vm.getUserList();
     });
-  },
-  created() {
-    if (this.$route.query.id) {
-      this._getUserDetail();
-      this.edit = true;
-    }
   },
   computed: {
     headers() {
@@ -284,49 +304,12 @@ export default {
     },
   },
   methods: {
-    _getUserDetail() {
-      let params = {
-        id: this.$route.query.id,
-      };
-      getUserDetail(params).then((res) => {
-        if (res.status == 200) {
-          let {
-            address,
-            age,
-            aw_contactusers,
-            birth,
-            idCard,
-            imgUrl,
-            introduction,
-            marital,
-            name,
-            person_id,
-            sex,
-            type,
-          } = res.data.data[0];
-          let contactList = this.accountForm.contactList;
-          if (aw_contactusers.length > 0) {
-            for (let i = 0; i < aw_contactusers.length; i++) {
-              contactList[i] = aw_contactusers;
-            }
-          }
-          console.log(aw_contactusers);
-          this.accountForm = {
-            address,
-            age,
-            birth,
-            idCard,
-            imgUrl,
-            introduction,
-            marital,
-            name,
-            person_id,
-            sex,
-            type,
-            contactList,
-          };
-        }
-      });
+    selectChange(item) {
+      console.log(item);
+      this.accountForm.person_id = item;
+    },
+    deleteImg(index) {
+      this.imgList.splice(index, 1);
     },
     handleBeforeUpload(file) {
       const isJPEG = file.name.split(".")[1] === "jpeg";
@@ -352,7 +335,8 @@ export default {
         message: "图片上传接口上传失败，可更改为自己的服务器接口",
       });
     },
-    uploadURL(file) {
+    uploadURL(file, index) {
+      console.log(file, index);
       //注意哦，这里指定文件夹'image/'，尝试过写在配置文件，但是各种不行，写在这里就可以
       var fileName = "image/" + "banner" + `${Date.parse(new Date())}` + ".jpg";
       //定义唯一的文件名，打印出来的uid其实就是时间戳
@@ -366,28 +350,38 @@ export default {
           //此处赋值，是相当于上传成功之后，手动拼接服务器地址和文件名
           //简单描述就是bucket概括，里面的域名地址，粘贴过来可以直接用
           console.log(res, "res++++");
-          this.accountForm.imgUrl =
-            "https://service0615.oss-cn-hangzhou.aliyuncs.com/" + fileName;
+          this.imgList.push(
+            "https://service0615.oss-cn-hangzhou.aliyuncs.com/" + fileName
+          );
         });
     },
-    getRolesList() {
-      getRolesList().then((response) => {
-        const res = response.data;
+    getUserList() {
+      let params = {
+        pagenum: 1,
+        pagesize: 50,
+      };
+      getUserList(params).then((res) => {
+        console.log(res.data.data.list);
         if (res.status === 200) {
-          this.roles = res.data.rolesList;
+          this.roles = res.data.data.list;
         } else {
           this.$message.error("获取角色选项失败");
         }
       });
     },
-    addAccount() {
+    addService() {
       this.$refs.accountForm.validate((valid) => {
         if (valid) {
-          addAccount(this.accountForm).then((response) => {
+          if (this.imgList.length == 0) {
+            this.$message.error("请上传至少一张图片");
+            return;
+          }
+          this.accountForm.imgUrl = this.imgList.toString();
+          this.accountForm.item = this.accountForm.item.toString();
+          addService(this.accountForm).then((response) => {
             const res = response.data;
             if (res.status === 200) {
               this.$message.success("账户添加成功");
-              // this.$router.push("manage_account");
             } else {
               this.$message.error("账户添加失败");
             }
@@ -398,25 +392,6 @@ export default {
         }
       });
     },
-    _updateUserInfo() {
-      this.$refs.accountForm.validate((valid) => {
-        if (valid) {
-          updateUserInfo(this.accountForm).then((response) => {
-            const res = response.data;
-            if (res.status === 200) {
-              this.$message.success("账户添加成功");
-              // this.$router.push("manage_account");
-            } else {
-              this.$message.error("账户添加失败");
-            }
-          });
-        } else {
-          this.$message.error("添加失败，请检查内容是否填写完整！");
-          return false;
-        }
-      });
-    },
-
     // 上传文件
     uploadFile(param) {
       const formData = new FormData();
@@ -447,15 +422,6 @@ export default {
     // 上传中
     imgOnProgress(event, file) {
       this.uploadDisabled = true;
-    },
-    // 移除封面图片
-    handleRemove(file) {
-      this.uploadDisabled = false;
-    },
-    // 查看封面图片
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
     },
   },
 };
@@ -516,11 +482,30 @@ export default {
   box-sizing: border-box;
   width: 148px;
   height: 148px;
-  cursor: pointer;
   line-height: 146px;
   vertical-align: top;
   text-align: center;
   font-size: 30px;
   color: #c0ccda;
+  margin-right: 10px;
+  position: relative;
+  .img {
+    display: block;
+    margin-right: 10px;
+    width: 140px;
+    height: auto;
+  }
+}
+.delete-icon {
+  font-size: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+  color: red;
+}
+.upload-btn {
+  width: 100px;
+  height: 40px;
 }
 </style>

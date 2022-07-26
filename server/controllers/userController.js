@@ -1,5 +1,6 @@
 
 const moment = require('moment') // 时间格式化插件
+const userInfoService = require('../services/userInfoService')
 
 const UserInfoService = require('../services/userInfoService')
 
@@ -75,6 +76,24 @@ module.exports = {
       ctx.body = {
         status: 'error',
         msg: '查询失败'
+      }
+    }
+  },
+
+  // 编辑用户信息
+  updateUserInfo: async (ctx) => {
+    const userObj = ctx.request.body
+    const result = await userInfoService.updateUserInfo(userObj.person_id, userObj)
+    if (result) {
+      ctx.body = {
+        status: 200,
+        data: result,
+        msg: ''
+      }
+    } else {
+      ctx.body = {
+        status: 'error',
+        msg: '编辑失败'
       }
     }
   }
